@@ -12,7 +12,7 @@ Playwright
  -then run "npx playwright install"
 
 With all dependencies installed:
- - run command "git clone https://github.com/username/repository-name.git](https://github.com/fsp21/calculator_playwright_typescript.git"
+ - run command "git clone https://github.com/fsp21/calculator_playwright_typescript.git"
  - navigate to the directory
  - ensure all dependencies are installed by running command "npm install"
  - run "npx playwright test" command to run all the tests
