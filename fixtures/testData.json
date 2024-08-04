@@ -1,5 +1,5 @@
 {
-    "exampleTestData": {
+    "objectData": {
       "url": "https://qainterview.pythonanywhere.com/",
       "expectedTitle": "Factoriall"
     }
