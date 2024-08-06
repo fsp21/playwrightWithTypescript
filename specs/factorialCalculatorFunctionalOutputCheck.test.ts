@@ -1,5 +1,5 @@
   import { test, expect } from '@playwright/test';
-  import * as testData from '../fixtures/testData.json';
+  import * as testData from '../fixtures/factorialCalculator.json';
 
 // *** New Test ***
 
