@@ -1,6 +1,7 @@
 {
-    "payload": {
-      "url": "https://api.thecatapi.com/v1/images/0XYvRd7oD",
-      "expectedTitle": "Factoriall"
+   "apiRequest": {
+      "url": "https://api.thecatapi.com/v1/images",
+      "apiKey": "live_BmFZwDFnhT8AxF11Uiv7st1SsuzMmoNzjK8QTPNe5HlzFsVLFYU3DPzzP18zn6T4"
     }
   }
+  

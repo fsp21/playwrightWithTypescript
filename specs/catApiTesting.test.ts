@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import * as apiTestData from '../fixtures/catApi.json';
+import * as catData from '../fixtures/catData.json'
 
 interface CatApiResponse {
     breeds: { name: string,
@@ -10,12 +11,12 @@ interface CatApiResponse {
 test("Check if specific Cat ID returns the expected name", async ({ request }) => {
 
     // Make the API request
-    const response = await request.get(apiTestData.payload.url);
+    const response = await request.get(apiTestData.apiRequest.url + catData.cats.abyssinian.id);
     expect(response.status()).toBe(200);
 
     // Specify properties/type expectation for TS to compile adequately
     const responseBody = await response.json() as CatApiResponse;
 
     // Check the name attribute specifically of the first object in the array
-    expect(responseBody.breeds[0].name).toContain("Abyssinian");
+    expect(responseBody.breeds[0].name).toContain(catData.cats.abyssinian.name);
   });
