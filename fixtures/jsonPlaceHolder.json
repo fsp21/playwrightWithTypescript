@@ -1,0 +1,7 @@
+{
+    "apiRequest": {
+       "todosUrl": "https://jsonplaceholder.typicode.com/todos/",
+       "postsUrl": "https://jsonplaceholder.typicode.com/posts"
+     }
+   }
+   
