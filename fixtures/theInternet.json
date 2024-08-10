@@ -1,6 +1,5 @@
 {
         "baseUrl": "https://the-internet.herokuapp.com/",
         "title": "The Internet",
-        "services": {
-        }
+        "loginUrl": "https://the-internet.herokuapp.com/login"
 }
