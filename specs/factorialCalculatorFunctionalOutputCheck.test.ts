@@ -5,7 +5,7 @@ import * as testData from '../fixtures/factorialCalculator.json';
 
 test("Clicking 'Calculate!' without any inputs in text box", async ({ page }) => {
   // Navigate to the page
-  await page.goto(testData.objectData.url);
+  await page.goto(testData.factorialPage.url);
 
   // Clicking "Calculate!" button to check result when no number has been passed
   await page.click('#getFactorial')
@@ -14,7 +14,6 @@ test("Clicking 'Calculate!' without any inputs in text box", async ({ page }) =>
   const textLocator = page.locator('#resultDiv');
   await expect(textLocator).toBeVisible();
   const textContent = await textLocator.textContent();
-  console.log(textContent);
   expect(textContent).toContain("Please enter an integer");
 });
 
@@ -22,18 +21,18 @@ test("Clicking 'Calculate!' without any inputs in text box", async ({ page }) =>
 // *** New Test ***
 
 test("Check if page title matches value specified in testData.json", async ({ page }) => {
-  await page.goto(testData.objectData.url);
+  await page.goto(testData.factorialPage.url);
 
     // Checking if title matches value stored in testData.json file
   const pageTitle = await page.title();
-  expect(pageTitle).toEqual(testData.objectData.expectedTitle);
+  expect(pageTitle).toEqual(testData.factorialPage.expectedTitle);
 });
 
 
 // *** New Test ***
 
 test('Checking API response after adding value 99999 and calculating', async ({ page }) => {
-  await page.goto(testData.objectData.url);
+  await page.goto(testData.factorialPage.url);
 
     // Intercept the response
   const [response] = await Promise.all([
@@ -57,7 +56,7 @@ test('Checking API response after adding value 99999 and calculating', async ({ 
 // *** New Test ***
 
 test('Check API response for different numbers submitted', async ({ page }) => {
-  await page.goto(testData.objectData.url);
+  await page.goto(testData.factorialPage.url);
 
     // Input values and expected responses:
   const testCases = [
@@ -80,7 +79,8 @@ test('Check API response for different numbers submitted', async ({ page }) => {
   await page.fill('#number', testCase.input),
 
   // Click the button to trigger the API request
-  await page.click('#getFactorial')]);
+  await page.click('#getFactorial')]
+  );
     
   // Parse the JSON response and declare expectation:
   const responseBody = await response.json();
@@ -98,7 +98,7 @@ test('Check API response for different numbers submitted', async ({ page }) => {
 // *** New Test ***
 
 test('Check if UI presents correct values retrieved from API', async ({ page }) => {
-  await page.goto(testData.objectData.url);
+  await page.goto(testData.factorialPage.url);
 
     // Input values and expected responses:
   const testCases = ['1', '5', '10', '11'];
