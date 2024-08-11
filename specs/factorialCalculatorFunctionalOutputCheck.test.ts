@@ -86,10 +86,6 @@ test('Check API response for different numbers submitted', async ({ page }) => {
   const responseBody = await response.json();
   let finalValue = responseBody.answer;
   expect(finalValue).toEqual(testCase.expected);
-
-  // Log each value submitted, expected result and response:
-  console.log(`Input: ${testCase.input}, Expected: ${testCase.expected}, Received: ${finalValue}`);
-
   }
 });
 
@@ -119,8 +115,5 @@ test('Check if UI presents correct values retrieved from API', async ({ page }) 
     const responseBody = await response.json();
     const finalValue = String(responseBody.answer);
     expect(textContent).toContain(finalValue);
-
-  // Logging expected and received values
-    console.log(`Input: ${numberInput}, Expected: The factorial of 1 is: ${finalValue}, Received: ${textContent}`);
   }
   });
