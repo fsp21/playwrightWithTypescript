@@ -10,12 +10,11 @@ Before running the tests, ensure you have the following installed:
 
 -Playwright
  - Navigate to the project directory
- - run "npm install playwright"
- - then run "npx playwright install"
+ - run "npm init playwright@latest" and follow the instructions
 
 With all dependencies installed:
  - run command "git clone https://github.com/fsp21/playwrightWithTypescript.git"
  - navigate to the directory
  - ensure all dependencies are installed by running command "npm install"
  - run "npx playwright test" command to run all the tests
- - alternatively, you can run "npx playwright test specs/factorialCalculatorFunctionalOutputCheck.test.ts" and replace the name of the file to execute a specific suite
+ - alternatively, you can run "npx playwright test specs/testFileName.spec.ts" and replace the name of the file to execute a specific suite
