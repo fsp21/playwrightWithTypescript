@@ -23,6 +23,20 @@ test.describe('Using Base Url', async() => {
         expect(page.url()).toBe('https://the-internet.herokuapp.com/broken_images');
     });
 
+    test("Clicking on all pages", async ({ page })=> {
+        await expect(page.locator('body')).toBeVisible();
+
+        const rows = await page.getByRole('listitem').all();
+        const count = rows.length;
+        for (let i = 0; i < count; ++i) {
+            await rows[i].getByRole('link').click();
+            await page.waitForLoadState('load');
+            await page.goto(theInternet.baseUrl);
+            
+        }
+            
+    })
+
 })
 
 test.describe('Using Login Url', async() => {
