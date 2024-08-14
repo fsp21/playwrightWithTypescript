@@ -1,11 +1,13 @@
 import { test, expect } from '@playwright/test';
 import * as testData from '../fixtures/factorialCalculator.json';
 
-// *** New Test ***
-
-test("Clicking 'Calculate!' without any inputs in text box", async ({ page }) => {
-  // Navigate to the page
+// simple hook to navigate to page before tests are executed
+test.beforeEach(async({page}) => {
   await page.goto(testData.factorialPage.url);
+});
+
+// *** New Test ***
+test("Clicking 'Calculate!' without any inputs in text box", async ({ page }) => {
 
   // Clicking "Calculate!" button to check result when no number has been passed
   await page.click('#getFactorial')
@@ -17,22 +19,16 @@ test("Clicking 'Calculate!' without any inputs in text box", async ({ page }) =>
   expect(textContent).toContain("Please enter an integer");
 });
 
-
 // *** New Test ***
-
 test("Check if page title matches value specified in testData.json", async ({ page }) => {
-  await page.goto(testData.factorialPage.url);
 
     // Checking if title matches value stored in testData.json file
   const pageTitle = await page.title();
   expect(pageTitle).toEqual(testData.factorialPage.expectedTitle);
 });
 
-
 // *** New Test ***
-
 test('Checking API response after adding value 99999 and calculating', async ({ page }) => {
-  await page.goto(testData.factorialPage.url);
 
     // Intercept the response
   const [response] = await Promise.all([
@@ -51,12 +47,8 @@ test('Checking API response after adding value 99999 and calculating', async ({ 
   expect(response.status()).toBe(500);
 });
 
-
-
 // *** New Test ***
-
 test('Check API response for different numbers submitted', async ({ page }) => {
-  await page.goto(testData.factorialPage.url);
 
     // Input values and expected responses:
   const testCases = [
@@ -89,12 +81,8 @@ test('Check API response for different numbers submitted', async ({ page }) => {
   }
 });
 
-
-
 // *** New Test ***
-
 test('Check if UI presents correct values retrieved from API', async ({ page }) => {
-  await page.goto(testData.factorialPage.url);
 
     // Input values and expected responses:
   const testCases = ['1', '5', '10', '11'];

@@ -1,18 +1,38 @@
 import { test, expect } from '@playwright/test'
 import * as theInternet from "../fixtures/theInternet.json"
 
-// *** New Test ***
+
+test.describe('Using Base Url', async() => {
+
+test.beforeEach(async({page}) => {
+    await page.goto(theInternet.baseUrl);
+})
+
 test("'The Internet' website simple access and title check", async ({ page }) => {
     
-    await page.goto(theInternet.baseUrl);
     const title = await page.title();
     expect(title).toBe(theInternet.title);
 });
 
 // *** New Test ***
+test("Check services", async ({ page }) => {
+    
+    expect(await page.isVisible('#content h2')).toBeTruthy();
+    await page.click('text="Broken Images"');
+    expect(await page.isVisible('#content h3')).toBeTruthy();
+    expect(page.url()).toBe('https://the-internet.herokuapp.com/broken_images');
+});
+
+})
+
+test.describe('Using Login Url', async() => {
+
+    test.beforeEach(async({page}) => {
+        await page.goto(theInternet.loginUrl);
+    });
+    // *** New Test ***
 test("Check error if 'Login' is clicked without submitting username/password", async ({ page }) => {
     
-    await page.goto(theInternet.loginUrl);
     expect(await page.isVisible('#login')).toBeTruthy();
 
     await page.click('#login button');
@@ -24,8 +44,7 @@ test("Check error if 'Login' is clicked without submitting username/password", a
 
 // *** New Test ***
 test("Check error if 'Login' is clicked with a username but no password submitted", async ({ page }) => {
-    
-    await page.goto(theInternet.loginUrl);
+
     expect(await page.isVisible('#login')).toBeTruthy();
 
     await page.fill('#username', 'test');
@@ -38,8 +57,7 @@ test("Check error if 'Login' is clicked with a username but no password submitte
 
 // *** New Test ***
 test("Check error if 'Login' is clicked with a password but no username submitted", async ({ page }) => {
-    
-    await page.goto(theInternet.loginUrl);
+
     expect(await page.isVisible('#login')).toBeTruthy();
 
     await page.fill('#password', 'test');
@@ -53,7 +71,6 @@ test("Check error if 'Login' is clicked with a password but no username submitte
 // *** New Test ***
 test("Check message if 'Login' is clicked with correct password and username", async ({ page }) => {
     
-    await page.goto(theInternet.loginUrl);
     expect(await page.isVisible('#login')).toBeTruthy();
 
     await page.fill('#username', 'tomsmith');
@@ -68,7 +85,6 @@ test("Check message if 'Login' is clicked with correct password and username", a
 // *** New Test ***
 test("Check flow after successful login and logout", async ({ page }) => {
     
-    await page.goto(theInternet.loginUrl);
     expect(await page.isVisible('#login')).toBeTruthy();
 
     await page.fill('#username', 'tomsmith');
@@ -82,13 +98,6 @@ test("Check flow after successful login and logout", async ({ page }) => {
     expect(page.url()).toBe(theInternet.loginUrl);
 
 });
-
-// *** New Test ***
-test("Check services", async ({ page }) => {
     
-    await page.goto(theInternet.baseUrl);
-    expect(await page.isVisible('#content h2')).toBeTruthy();
-    await page.click('text="Broken Images"');
-    expect(await page.isVisible('#content h3')).toBeTruthy();
-    expect(page.url()).toBe('https://the-internet.herokuapp.com/broken_images');
-});
+    
+    });
