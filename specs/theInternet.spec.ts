@@ -1,38 +1,50 @@
 import { test, expect } from '@playwright/test'
 import * as theInternet from "../fixtures/theInternet.json"
 
-
 test.describe('Using Base Url', async() => {
-
+    //Navigate to the home page before each test is executed
     test.beforeEach(async({page}) => {
         await page.goto(theInternet.baseUrl);
     })
 
+    // *** New Test ***
     test("'The Internet' website simple access and title check", async ({ page }) => {
-        
+        //Simple title check to verify if page loaded as expected
         const title = await page.title();
         expect(title).toBe(theInternet.title);
     });
 
     // *** New Test ***
     test("Check services", async ({ page }) => {
-        
+        //Verifying page loaded successfully and waiting for element to be visible
         expect(await page.isVisible('#content h2')).toBeTruthy();
+
+        //Clicking one link using the text inside click method
         await page.click('text="Broken Images"');
+
+        //Checking if element in new page is available
         expect(await page.isVisible('#content h3')).toBeTruthy();
+
+        //Checking if the URL matches the expected redirected page's URL
         expect(page.url()).toBe('https://the-internet.herokuapp.com/broken_images');
     });
 
-    // Flaky test
+    // Flaky test, will refactor. Idea is to click all links and check if redirection worked as expected
     test("Clicking on all pages", async ({ page })=> {
-        await expect(page.locator('body')).toBeVisible();
 
+        // Declaring a constant to store an array containing the text content for all links in the list
         const namesOfLinks = await page.getByRole('listitem').allTextContents();
 
+        // For loop to iterate through each element of the array, using the text values as identifiers to click
         for (const nameOfLink of namesOfLinks){
+            // Navigate back to the home page after each iteration
             await page.goto(theInternet.baseUrl);
+
+            // Locating links through the text content stored in each element of the namesOfLinks array
             await page.getByText(`${nameOfLink}`, { exact: true }).click();
-            await page.waitForLoadState('load');
+
+            // Ensuring the page loads after clicking
+            expect(await page.waitForLoadState('load')).toBeUndefined;
             
         }
             

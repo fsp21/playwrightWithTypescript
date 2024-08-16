@@ -13,6 +13,7 @@ test("Practice importing and using interfaces with jsonPlaceHolder API", async (
     // Return JSON of response using the interface imported from jsonPlaceholderServicesBody.ts;
     const responseBody = await response.json() as jsonFormatResponse;
 
+    // Somewhat random check just to ensure response had content
     expect(responseBody.length).toBeGreaterThan(0);
 
   });
