@@ -33,6 +33,7 @@ test.describe('Using Base Url', async() => {
             await page.goto(theInternet.baseUrl);
             await page.getByText(`${nameOfLink}`, { exact: true }).click();
             await page.waitForLoadState('load');
+            
 
         }
             
