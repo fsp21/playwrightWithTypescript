@@ -34,7 +34,6 @@ test.describe('Using Base Url', async() => {
             await page.getByText(`${nameOfLink}`, { exact: true }).click();
             await page.waitForLoadState('load');
             
-
         }
             
     })
