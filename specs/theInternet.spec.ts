@@ -23,16 +23,17 @@ test.describe('Using Base Url', async() => {
         expect(page.url()).toBe('https://the-internet.herokuapp.com/broken_images');
     });
 
+    // Flaky test
     test("Clicking on all pages", async ({ page })=> {
         await expect(page.locator('body')).toBeVisible();
 
-        const rows = await page.getByRole('listitem').all();
-        const count = rows.length;
-        for (let i = 0; i < count; ++i) {
-            await rows[i].getByRole('link').click();
-            await page.waitForLoadState('load');
+        const namesOfLinks = await page.getByRole('listitem').allTextContents();
+
+        for (const nameOfLink of namesOfLinks){
             await page.goto(theInternet.baseUrl);
-            
+            await page.getByText(`${nameOfLink}`, { exact: true }).click();
+            await page.waitForLoadState('load');
+
         }
             
     })
