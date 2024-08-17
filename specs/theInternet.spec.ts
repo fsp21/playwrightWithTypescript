@@ -127,37 +127,41 @@ test.describe('Using Login Url', async() => {
 });
 
 test.describe('Proposed ChatGPT exercises to practice', async()=> {
-test('Checkboxes page validation', async({ page }) => {
+
+    test.beforeEach(async({page}) => {
+        await page.goto(theInternet.baseUrl);
+    })
+
+    //___New Test
+    test('Checkboxes page validation', async({ page }) => {
     
-    await page.goto(theInternet.baseUrl);
-    await page.getByText('Checkboxes').click();
-    await page.waitForURL(theInternet.baseUrl + '/checkboxes');
+        await page.getByText('Checkboxes').click();
+        await page.waitForURL(theInternet.baseUrl + '/checkboxes');
 
-    const firstCheckbox = page.getByRole('checkbox').nth(0)
-    const secondCheckbox = page.getByRole('checkbox').nth(1)
+        const firstCheckbox = page.getByRole('checkbox').nth(0)
+        const secondCheckbox = page.getByRole('checkbox').nth(1)
 
-    await expect(firstCheckbox).not.toBeChecked();
-    await expect(secondCheckbox).toBeChecked();
+        await expect(firstCheckbox).not.toBeChecked();
+        await expect(secondCheckbox).toBeChecked();
 
-    await firstCheckbox.check();
-    await secondCheckbox.uncheck();
+        await firstCheckbox.check();
+        await secondCheckbox.uncheck();
+        
+        await expect(firstCheckbox).toBeChecked();
+        await expect(secondCheckbox).not.toBeChecked();
+    });
+
+    test('Dropdown page validation', async({ page }) => {
     
-    await expect(firstCheckbox).toBeChecked();
-    await expect(secondCheckbox).not.toBeChecked();
-});
+        await page.getByText('Dropdown').click();
+        await page.waitForURL(theInternet.baseUrl + '/dropdown');
+        const dropdownElement = page.locator('select');
 
-test('Dropdown page validation', async({ page }) => {
+        await expect(dropdownElement).toBeVisible();
+        await dropdownElement.selectOption({ label: 'Option 2' })
+        await expect(page.getByText('Option 2')).toHaveAttribute('selected');
+
+        await page.screenshot()
     
-    await page.goto(theInternet.baseUrl);
-    await page.getByText('Dropdown').click();
-    await page.waitForURL(theInternet.baseUrl + '/dropdown');
-    const dropdownElement = page.locator('select');
-
-    await expect(dropdownElement).toBeVisible();
-    await dropdownElement.selectOption({ label: 'Option 2' })
-    await expect(page.getByText('Option 2')).toHaveAttribute('selected');
-
-    await page.screenshot()
-    
-});
+    });
 })
