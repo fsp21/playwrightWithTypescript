@@ -29,26 +29,32 @@ test.describe('Using Base Url', async() => {
         expect(page.url()).toBe('https://the-internet.herokuapp.com/broken_images');
     });
 
-    // Flaky test, will refactor. Idea is to click all links and check if redirection worked as expected
+    // Click all links and check if redirection worked as expected
     test("Clicking on all pages", async ({ page })=> {
 
-        // Declaring a constant to store an array containing the text content for all links in the list
-        const namesOfLinks = await page.getByRole('listitem').allTextContents();
+        // Declaring a constant to store an array containing all 'list items' (each link plus it's descriptive text)
+        const namesOfLinks = await page.getByRole('listitem').all();
 
-        // For loop to iterate through each element of the array, using the text values as identifiers to click
+
+        // For loop to iterate through each element of the array
         for (const nameOfLink of namesOfLinks){
+
             // Navigate back to the home page after each iteration
             await page.goto(theInternet.baseUrl);
+            //Store value of initial URL to compare if redirected
+            const firstUrl = page.url();
 
-            // Locating links through the text content stored in each element of the namesOfLinks array
-            await page.getByText(`${nameOfLink}`, { exact: true }).click();
+            // Locating and clicking specifically the link stored in the current element in the loop
+            await nameOfLink.getByRole('link').click();
+            //Store value of URL after click to compare if redirected
+            const secondUrl = page.url();
 
-            // Ensuring the page loads after clicking
-            expect(await page.waitForLoadState('load')).toBeUndefined;
+            // Ensuring the URLs are different
+            expect(firstUrl).not.toBe(secondUrl);
             
         }
             
-    })
+    });
 
 })
 
